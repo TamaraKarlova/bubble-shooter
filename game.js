@@ -206,7 +206,7 @@ canvas.addEventListener('mousemove', (e) => {
 
 canvas.addEventListener('click', (e) => {
     if (!activeBubble) {
-        createActiveBubble();  // Выстрел пузырем
+        createActiveBubble();  // Выстрел новым пузырём
     }
 });
 
