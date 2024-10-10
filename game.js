@@ -103,14 +103,17 @@ function updateBubble() {
 
 // Функция для создания летящего пузыря
 function createActiveBubble() {
-    activeBubble = {
-        x: shooter.x,
-        y: shooter.y,
-        dx: Math.cos(shooter.angle) * 5,
-        dy: Math.sin(shooter.angle) * 5,
-        color: shooter.color
-    };
-    shooter.color = getRandomColor();  // Новый цвет для следующего пузыря
+    if (!activeBubble) {
+        // Создание нового летящего пузыря
+        activeBubble = {
+            x: shooter.x,
+            y: shooter.y,
+            dx: Math.cos(shooter.angle) * 5,  // Скорость всегда будет 5
+            dy: Math.sin(shooter.angle) * 5,
+            color: shooter.color
+        };
+        shooter.color = getRandomColor();  // Новый цвет для следующего пузыря
+    }
 }
 
 // Проверка столкновения пузыря
@@ -137,7 +140,7 @@ function placeBubble() {
         removeBubbles(matchedBubbles);
     }
 
-    activeBubble = null;
+    activeBubble = null;  // Сброс активного пузыря
 }
 
 // Поиск пузырей одного цвета
@@ -196,7 +199,9 @@ canvas.addEventListener('mousemove', (e) => {
     let mouseY = e.clientY - rect.top;
 
     // Рассчитываем угол, по которому будет стрелять пузырь
-    shooter.angle = Math.atan2(mouseY - shooter.y, mouseX - shooter.x);
+    let dx = mouseX - shooter.x;
+    let dy = mouseY - shooter.y;
+    shooter.angle = Math.atan2(dy, dx);
 });
 
 canvas.addEventListener('click', (e) => {
